@@ -45,6 +45,9 @@ const About = () => {
               </div>
               <div className="about-sidebar-card">
                 <h3>Coming Sermon</h3>
+                <div style={{ margin: '14px 0', borderRadius: 'var(--radius-md)', overflow: 'hidden', height: '180px' }}>
+                  <img src="/sermon-1.jpg" alt="Coming Sermon" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
                 <p style={{ fontSize: '0.9rem', color: 'var(--medium-gray)' }}>
                   "Areas All of Us Struggle to Trust God With" by John Stevenson — A powerful exploration of faith and surrender.
                 </p>

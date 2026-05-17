@@ -6,7 +6,7 @@ export const blogPosts = [
     author: 'Jerusha Andeyek',
     date: 'July 1, 2020',
     category: 'Devotional',
-    image: '/hero-bible-study.png',
+    image: '/blog-innocent.png',
     excerpt:
       'The story is told of Tamar in 2 Sam. 13:7-15. She was King David\'s daughter. She was a virgin, beautiful, and innocent with great prospects in life. But the sad and unfortunate thing that happened to her closed her chapter in the Bible.',
     content: [
@@ -31,7 +31,7 @@ export const blogPosts = [
     author: 'The Chaplain',
     date: 'July 1, 2020',
     category: 'Sermon',
-    image: '/hero-worship.png',
+    image: '/blog-ticket.png',
     excerpt:
       'In well-organised transport systems whether by rail, road, water or air, tickets are very important for travelling especially when the time to travel zeros in. There is a journey you must undertake one day sooner or later.',
     content: [
@@ -52,7 +52,7 @@ export const blogPosts = [
     author: 'The Chaplain',
     date: 'July 1, 2020',
     category: 'Sermon',
-    image: '/hero-community.png',
+    image: '/blog-arrival.jpg',
     excerpt:
       'When you travel, part of the signs that you are approaching a town are messages of welcome. Can you think for a moment of a situation where there can be an arrival without a welcome?',
     content: [
