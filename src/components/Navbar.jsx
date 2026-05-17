@@ -63,6 +63,9 @@ const Navbar = () => {
               <Link to="/contact" className={`nav-link ${isActive('/contact')}`}>Contact</Link>
             </div>
             <div className="nav-item">
+              <Link to="/blog" className={`nav-link ${location.pathname.startsWith('/blog') ? 'active' : ''}`}>Blog</Link>
+            </div>
+            <div className="nav-item">
               <Link to="/visitors" className={`nav-link ${isActive('/visitors')}`}>Visitors</Link>
             </div>
             <div className="nav-item">

@@ -8,6 +8,8 @@ import Contact from './pages/Contact';
 import Visitors from './pages/Visitors';
 import Donation from './pages/Donation';
 import Downloads from './pages/Downloads';
+import Blog from './pages/Blog';
+import BlogDetail from './pages/BlogDetail';
 
 import './styles/index.css';
 
@@ -32,6 +34,8 @@ const App = () => {
           <Route path="/visitors" element={<Visitors />} />
           <Route path="/donation" element={<Donation />} />
           <Route path="/downloads" element={<Downloads />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogDetail />} />
         </Routes>
       </main>
       <Footer />

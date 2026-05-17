@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { FaChurch, FaUsers, FaHandHoldingHeart, FaChevronLeft, FaChevronRight, FaBible, FaPrayingHands } from 'react-icons/fa';
+import { blogPosts } from '../data/blogPosts';
 import '../styles/Home.css';
 
 const slides = [
@@ -146,42 +147,27 @@ const Home = () => {
         <div className="container">
           <div className="section-title">
             <h2>Latest From Our Blog</h2>
-            <p>Insights, devotionals, and news from the Chapel community</p>
+            <p>Sermons, devotionals, and insights from the Chapel community</p>
           </div>
           <div className="blog-grid">
-            <div className="blog-card">
-              <div className="blog-card-img"><span>📖</span></div>
-              <div className="blog-card-body">
-                <div className="blog-card-meta">
-                  <span>By Jerusha Andeyek</span>
-                  <span>Chapel Blog</span>
+            {blogPosts.map((post) => (
+              <div className="blog-card" key={post.id}>
+                <div className="blog-card-img">
+                  <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
-                <h3><a href="#">Innocent, But NOT Wise!</a></h3>
-                <p>A reflection on the importance of wisdom in our walk with God. Being innocent alone is not enough — we must also seek divine wisdom.</p>
-              </div>
-            </div>
-            <div className="blog-card">
-              <div className="blog-card-img" style={{ background: 'linear-gradient(135deg, #d4a017, #f0c040)' }}><span>🙏</span></div>
-              <div className="blog-card-body">
-                <div className="blog-card-meta">
-                  <span>By Chapel Media</span>
-                  <span>Devotional</span>
+                <div className="blog-card-body">
+                  <div className="blog-card-meta">
+                    <span>By {post.author}</span>
+                    <span>{post.category}</span>
+                  </div>
+                  <h3><Link to={`/blog/${post.slug}`}>{post.title}</Link></h3>
+                  <p>{post.excerpt.substring(0, 120)}...</p>
                 </div>
-                <h3><a href="#">Walking in the Light</a></h3>
-                <p>Understanding what it means to live a life fully surrendered to Christ and walking in the light of His word daily.</p>
               </div>
-            </div>
-            <div className="blog-card">
-              <div className="blog-card-img" style={{ background: 'linear-gradient(135deg, #16213e, #0f3460)' }}><span>⛪</span></div>
-              <div className="blog-card-body">
-                <div className="blog-card-meta">
-                  <span>By Chapel Admin</span>
-                  <span>Announcements</span>
-                </div>
-                <h3><a href="#">Sunday Service Highlights</a></h3>
-                <p>A recap of the powerful messages and worship experiences from our recent Sunday services at the Chapel.</p>
-              </div>
-            </div>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: '40px' }}>
+            <Link to="/blog" className="btn btn-primary">View All Posts</Link>
           </div>
         </div>
       </section>
