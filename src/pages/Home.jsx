@@ -6,29 +6,19 @@ import '../styles/Home.css';
 
 const slides = [
   {
-    image: '/hero-1.jpg',
+    image: '/hero-worship.png',
     title: 'Becoming like Jesus...',
     subtitle: 'Helping others become like Him — Matthew 28:19-20',
   },
   {
-    image: '/hero-2.jpg',
+    image: '/hero-community.png',
     title: 'A Community of Faith',
     subtitle: 'Growing together in love, unity, and purity on campus',
   },
   {
-    image: '/hero-3.jpg',
+    image: '/hero-bible-study.png',
     title: 'Feed My Sheep',
     subtitle: 'John 21:17 — Discipleship, fellowship, and the Word of God',
-  },
-  {
-    image: '/hero-4.jpg',
-    title: 'Welcome & Worship',
-    subtitle: 'Come experience the warmth of our community at CGS',
-  },
-  {
-    image: '/hero-5.jpg',
-    title: 'The Chapel of the Good Shepherd',
-    subtitle: 'University of Agriculture, Makurdi — A place of prayer for all',
   },
 ];
 
@@ -111,19 +101,19 @@ const Home = () => {
           </div>
           <div className="quick-info-grid">
             <div className="info-card">
-              <div className="info-card-img"><img src="/iamnew.jpeg" alt="I'm New" /></div>
+              <div className="info-card-icon"><FaChurch /></div>
               <h3>I'm New Here</h3>
               <p>First time visitor? We'd love to meet you! Find out how, where and when we worship. Come experience the warmth of our community.</p>
               <Link to="/visitors" className="btn btn-secondary" style={{ marginTop: '20px' }}>Visit Us</Link>
             </div>
             <div className="info-card">
-              <div className="info-card-img"><img src="/chapel.jpeg" alt="About CGS" /></div>
+              <div className="info-card-icon"><FaBible /></div>
               <h3>About Our Church</h3>
               <p>As the culture becomes increasingly hostile to the message of Christ, we remain steadfast in our commitment to the Gospel and community discipleship.</p>
               <Link to="/about" className="btn btn-secondary" style={{ marginTop: '20px' }}>Learn More</Link>
             </div>
             <div className="info-card">
-              <div className="info-card-img"><img src="/church.jpeg" alt="Our Community" /></div>
+              <div className="info-card-icon"><FaUsers /></div>
               <h3>Church Members</h3>
               <p>As it was in the earliest days, the church thrives when its members are actively engaged in worship, fellowship, and service to one another.</p>
               <Link to="/about" className="btn btn-secondary" style={{ marginTop: '20px' }}>Join Us</Link>
@@ -145,7 +135,7 @@ const Home = () => {
               </blockquote>
             </div>
             <div className="mission-visual">
-              <img src="/chapel.jpeg" alt="Our Chapel" />
+              <img src="/hero-community.png" alt="Our community" />
               <div className="mission-decoration" />
             </div>
           </div>
