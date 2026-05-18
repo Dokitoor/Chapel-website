@@ -11,14 +11,14 @@ const Blog = () => {
 
       <section className="blog-page">
         <div className="container">
-          <div className="section-title">
+          <div className="section-title reveal">
             <h2>Chapel Blog</h2>
             <p>Sermons, devotionals, and spiritual insights from our community</p>
           </div>
 
           <div className="blog-page-grid">
             {/* Blog Posts List */}
-            <div className="blog-list">
+            <div className="blog-list reveal-left">
               {blogPosts.map((post) => (
                 <article className="blog-list-card" key={post.id}>
                   <div className="blog-list-card-img">
@@ -43,7 +43,7 @@ const Blog = () => {
             </div>
 
             {/* Sidebar */}
-            <aside className="blog-sidebar">
+            <aside className="blog-sidebar reveal-right">
               <div className="sidebar-card">
                 <h3>About Our Blog</h3>
                 <p>

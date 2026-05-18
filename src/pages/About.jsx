@@ -18,7 +18,7 @@ const About = () => {
       <section className="about-main">
         <div className="container">
           <div className="about-content-grid">
-            <div className="about-text">
+            <div className="about-text reveal-left">
               <h2>About The Chapel of the Good Shepherd</h2>
               <p>
                 The Chapel of the Good Shepherd (CGS) is a vibrant Christian community within the University of Agriculture, Makurdi (UAM).
@@ -36,7 +36,7 @@ const About = () => {
                 and the transforming power of worship.
               </p>
             </div>
-            <div>
+            <div className="reveal-right">
               <div className="about-sidebar-card">
                 <h3>Coming Event</h3>
                 <p style={{ fontSize: '0.9rem', color: 'var(--medium-gray)' }}>
@@ -56,13 +56,13 @@ const About = () => {
 
       <section className="about-values">
         <div className="container">
-          <div className="section-title">
+          <div className="section-title reveal">
             <h2>Our Core Values</h2>
             <p>The pillars that guide our community life and ministry</p>
           </div>
           <div className="values-grid">
             {values.map((value, index) => (
-              <div className="value-card" key={index}>
+              <div className={`value-card reveal-scale delay-${(index % 3) + 1}`} key={index}>
                 <div className="value-card-icon">{value.icon}</div>
                 <h3>{value.title}</h3>
                 <span className="verse">{value.verse}</span>

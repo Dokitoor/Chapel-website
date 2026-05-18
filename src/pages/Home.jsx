@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { FaChurch, FaUsers, FaHandHoldingHeart, FaChevronLeft, FaChevronRight, FaBible, FaPrayingHands } from 'react-icons/fa';
+import { FaChurch, FaUsers, FaChevronLeft, FaChevronRight, FaBible, FaPrayingHands, FaArrowRight, FaClock, FaCalendarAlt } from 'react-icons/fa';
 import { blogPosts } from '../data/blogPosts';
 import '../styles/Home.css';
 
@@ -45,148 +45,296 @@ const Home = () => {
     setEmail('');
   };
 
+  // Splitting blog posts for modern editorial showcase
+  const featuredPost = blogPosts[0];
+  const sidePosts = blogPosts.slice(1, 3);
+
   return (
     <>
-      {/* ===== HERO SLIDER ===== */}
-      <section className="hero-slider">
-        {slides.map((slide, index) => (
-          <div key={index} className={`hero-slide ${index === currentSlide ? 'active' : ''}`}>
-            <img src={slide.image} alt={slide.title} className="hero-slide-bg" />
-            <div className="hero-overlay" />
-            <div className="hero-content">
-              <h2>{slide.title}</h2>
-              <p>{slide.subtitle}</p>
-              <div className="hero-buttons">
-                <Link to="/about" className="btn btn-primary">Learn More</Link>
-                <Link to="/visitors" className="btn btn-outline">I'm New Here</Link>
+      {/* ===== CINEMATIC SPLIT HERO SECTION ===== */}
+      <section className="modern-hero">
+        <div className="hero-glow-orb animate-pulse" />
+        <div className="container modern-hero-inner">
+          
+          {/* Left Column: Bold Typography & CTAs */}
+          <div className="hero-text-side reveal-left">
+            <span className="hero-eyebrow">
+              <span className="pulsing-dot" /> ESTABLISHED 1990 — UNIVERSITY FELLOWSHIP
+            </span>
+            <h1 className="hero-main-title">
+              Chapel of the <br />
+              <span className="gradient-text">Good Shepherd</span>
+            </h1>
+            <p className="hero-description">
+              A vibrant campus Christian community steadfast in our commitment to the Gospel, active discipleship, and warm fellowship at the University of Agriculture, Makurdi.
+            </p>
+            
+            {/* Quick Stats Banner */}
+            <div className="hero-stats-row">
+              <div className="stat-pill">
+                <strong>Sunday Service</strong>
+                <span>8:30 AM</span>
+              </div>
+              <div className="stat-pill">
+                <strong>Bible Study</strong>
+                <span>Wednesday 5:00 PM</span>
               </div>
             </div>
-          </div>
-        ))}
 
-        <div className="hero-arrows">
-          <button className="hero-arrow" onClick={prevSlide} aria-label="Previous slide"><FaChevronLeft /></button>
-          <button className="hero-arrow" onClick={nextSlide} aria-label="Next slide"><FaChevronRight /></button>
-        </div>
-
-        <div className="hero-controls">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              className={`hero-dot ${index === currentSlide ? 'active' : ''}`}
-              onClick={() => setCurrentSlide(index)}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* ===== EVENT BANNER ===== */}
-      <section className="event-banner">
-        <div className="container event-banner-inner">
-          <div className="event-info">
-            <h3>Welcome & Orientation — Fresh Students</h3>
-            <p>Theme: Running To Win | Message • Seminars • Songs Ministration • Drama & More</p>
-          </div>
-          <Link to="/visitors" className="btn btn-gold">Register Now</Link>
-        </div>
-      </section>
-
-      {/* ===== QUICK INFO ===== */}
-      <section className="quick-info">
-        <div className="container">
-          <div className="section-title">
-            <h2>Welcome to CGS</h2>
-            <p>The Chapel of the Good Shepherd, University of Agriculture Makurdi</p>
-          </div>
-          <div className="quick-info-grid">
-            <div className="info-card">
-              <div className="info-card-icon"><FaChurch /></div>
-              <h3>I'm New Here</h3>
-              <p>First time visitor? We'd love to meet you! Find out how, where and when we worship. Come experience the warmth of our community.</p>
-              <Link to="/visitors" className="btn btn-secondary" style={{ marginTop: '20px' }}>Visit Us</Link>
-            </div>
-            <div className="info-card">
-              <div className="info-card-icon"><FaBible /></div>
-              <h3>About Our Church</h3>
-              <p>As the culture becomes increasingly hostile to the message of Christ, we remain steadfast in our commitment to the Gospel and community discipleship.</p>
-              <Link to="/about" className="btn btn-secondary" style={{ marginTop: '20px' }}>Learn More</Link>
-            </div>
-            <div className="info-card">
-              <div className="info-card-icon"><FaUsers /></div>
-              <h3>Church Members</h3>
-              <p>As it was in the earliest days, the church thrives when its members are actively engaged in worship, fellowship, and service to one another.</p>
-              <Link to="/about" className="btn btn-secondary" style={{ marginTop: '20px' }}>Join Us</Link>
+            <div className="hero-ctas">
+              <Link to="/visitors" className="btn btn-primary">
+                Plan Your Visit <FaArrowRight />
+              </Link>
+              <Link to="/about" className="btn btn-outline">
+                Our Journey
+              </Link>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ===== MISSION ===== */}
-      <section className="mission-section">
-        <div className="container">
-          <div className="mission-content">
-            <div className="mission-text">
-              <span className="verse-tag"><FaPrayingHands /> Our Mission</span>
-              <h2>Our Mission Statement</h2>
-              <blockquote>
-                "To bring the members of the University Community to know Jesus Christ personally as Lord and Saviour,
-                to grow to become like Him in faith, Love, Unity and Purity for effective kingdom Service."
-              </blockquote>
-            </div>
-            <div className="mission-visual">
-              <img src="/hero-community.png" alt="Our community" />
-              <div className="mission-decoration" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== BLOG PREVIEW ===== */}
-      <section className="blog-preview">
-        <div className="container">
-          <div className="section-title">
-            <h2>Latest From Our Blog</h2>
-            <p>Sermons, devotionals, and insights from the Chapel community</p>
-          </div>
-          <div className="blog-grid">
-            {blogPosts.map((post) => (
-              <div className="blog-card" key={post.id}>
-                <div className="blog-card-img">
-                  <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-                <div className="blog-card-body">
-                  <div className="blog-card-meta">
-                    <span>By {post.author}</span>
-                    <span>{post.category}</span>
+          {/* Right Column: Rotating Image Canvas with Floating Glass Card */}
+          <div className="hero-canvas-side reveal-right">
+            <div className="canvas-frame">
+              {slides.map((slide, index) => (
+                <div 
+                  key={index} 
+                  className={`canvas-slide ${index === currentSlide ? 'active' : ''}`}
+                >
+                  <img src={slide.image} alt={slide.title} />
+                  <div className="canvas-slide-overlay" />
+                  <div className="canvas-slide-caption">
+                    <h3>{slide.title}</h3>
+                    <p>{slide.subtitle}</p>
                   </div>
-                  <h3><Link to={`/blog/${post.slug}`}>{post.title}</Link></h3>
-                  <p>{post.excerpt.substring(0, 120)}...</p>
                 </div>
+              ))}
+              
+              <div className="canvas-arrows">
+                <button className="canvas-arrow" onClick={prevSlide}><FaChevronLeft /></button>
+                <button className="canvas-arrow" onClick={nextSlide}><FaChevronRight /></button>
               </div>
-            ))}
+
+              <div className="canvas-indicators">
+                {slides.map((_, index) => (
+                  <span 
+                    key={index} 
+                    className={`indicator-bar ${index === currentSlide ? 'active' : ''}`}
+                    onClick={() => setCurrentSlide(index)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Floating Glassmorphic Pill */}
+            <div className="floating-glass-badge">
+              <div className="badge-icon"><FaPrayingHands /></div>
+              <div>
+                <h4>"Feed My Sheep"</h4>
+                <p>John 21:17</p>
+              </div>
+            </div>
           </div>
-          <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            <Link to="/blog" className="btn btn-primary">View All Posts</Link>
+
+        </div>
+      </section>
+
+      {/* ===== WELCOME ORIENTATION BANNER ===== */}
+      <section className="event-banner-modern">
+        <div className="container">
+          <div className="event-banner-card reveal">
+            <div className="event-card-content">
+              <span className="event-tag">UPCOMING SESSION</span>
+              <h3>Fresh Students Welcome & Orientation</h3>
+              <p>Theme: "Running To Win" — Seminars, worship ministration, drama, and academic discipleship guidance.</p>
+            </div>
+            <Link to="/visitors" className="btn btn-gold">
+              Register Now <FaArrowRight />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ===== NEWSLETTER ===== */}
-      <section className="newsletter-section">
-        <div className="container newsletter-inner">
-          <h2>Stay Connected</h2>
-          <p>Subscribe to our newsletter and stay updated with chapel activities</p>
-          <form className="newsletter-form" onSubmit={handleNewsletter}>
-            <input
-              type="email"
-              placeholder="Enter your email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <button type="submit" className="btn btn-primary">Subscribe</button>
-          </form>
+      {/* ===== INTERACTIVE BENTO GRID ===== */}
+      <section className="bento-quick-info">
+        <div className="container">
+          <div className="section-title reveal">
+            <span className="sub-title">CORE INTERACTION</span>
+            <h2>Welcome to CGS Community</h2>
+            <p>Explore our church community hubs, discipleship groups, and weekly fellowship modules.</p>
+          </div>
+          
+          <div className="bento-grid">
+            
+            {/* Card 1: Main Welcome (Col Span 2) */}
+            <div className="bento-card bento-welcome reveal-scale delay-1">
+              <div className="bento-card-bg" style={{ backgroundImage: "linear-gradient(to right, rgba(30, 27, 75, 0.95) 40%, rgba(30, 27, 75, 0.2)), url('/hero-community.png')" }} />
+              <div className="bento-card-content">
+                <span className="card-badge">GET STARTED</span>
+                <h3>I'm New Here</h3>
+                <p>Are you a freshman or first-time worshipper? We would love to meet you and help you get connected with our fellowships, academic seminars, and spiritual mentors.</p>
+                <Link to="/visitors" className="btn btn-secondary-modern">Visit Us <FaArrowRight /></Link>
+              </div>
+            </div>
+
+            {/* Card 2: Scripture Pill (Col Span 1) */}
+            <div className="bento-card bento-doctrine reveal-scale delay-2">
+              <div className="bento-card-content">
+                <div className="bento-icon"><FaBible /></div>
+                <h3>About Our Church</h3>
+                <p>Rooted in scripture, steadfast in doctrine, and devoted to equipping believers for purposeful Kingdom impact.</p>
+                <Link to="/about" className="bento-link">Learn More <FaArrowRight /></Link>
+              </div>
+            </div>
+
+            {/* Card 3: Membership (Col Span 1) */}
+            <div className="bento-card bento-members reveal-scale delay-3">
+              <div className="bento-card-content">
+                <div className="bento-icon"><FaUsers /></div>
+                <h3>Chapel Members</h3>
+                <p>Active fellowship thrives through service, cell groups, and worship teams. Discover your place in our family.</p>
+                <Link to="/about" className="bento-link">Join Us <FaArrowRight /></Link>
+              </div>
+            </div>
+
+            {/* Card 4: Services Bento (Col Span 2) */}
+            <div className="bento-card bento-services reveal-scale delay-4">
+              <div className="bento-card-content">
+                <span className="card-badge-gold">FELLOWSHIP HOURS</span>
+                <h3>Our Weekly Gatherings</h3>
+                <div className="services-bento-grid">
+                  <div className="service-bento-item">
+                    <h4>Sunday School</h4>
+                    <p>8:30 AM — 9:30 AM</p>
+                  </div>
+                  <div className="service-bento-item">
+                    <h4>Sunday Worship Service</h4>
+                    <p>9:30 AM — 11:30 AM</p>
+                  </div>
+                  <div className="service-bento-item">
+                    <h4>Midweek Bible Study</h4>
+                    <p>Wednesday 5:00 PM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ===== IMMERSIVE TYPOGRAPHIC MISSION ===== */}
+      <section className="modern-mission">
+        <div className="mission-backdrop-word">SHEPHERD</div>
+        <div className="container">
+          <div className="mission-split-grid">
+            <div className="mission-text-side reveal-left">
+              <span className="mission-eyebrow"><FaPrayingHands /> OUR MISSION</span>
+              <h2 className="mission-title">Purpose Built For Eternal Impact</h2>
+              <p className="mission-statement">
+                "To bring the members of the University Community to know Jesus Christ personally as Lord and Saviour, and to grow to become like Him in faith, love, unity, and purity for effective Kingdom service."
+              </p>
+              <div className="mission-divider" />
+              <Link to="/about" className="btn btn-primary">Our Core Values</Link>
+            </div>
+            
+            <div className="mission-visual-side reveal-right">
+              <div className="visual-wrapper">
+                <img src="/hero-bible-study.png" alt="Bible Study" />
+                <div className="glow-border" />
+                <div className="floating-verse-box">
+                  <p>"Go therefore and make disciples of all the nations..."</p>
+                  <span>— Matthew 28:19</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FEATURED EDITORIAL SERMONS ===== */}
+      <section className="modern-sermons">
+        <div className="container">
+          <div className="section-title reveal">
+            <span className="sub-title">SPIRITUAL BREAD</span>
+            <h2>Latest From Our Blog</h2>
+            <p>Dive deep into spiritual devotionals and transformative Sunday messages.</p>
+          </div>
+
+          <div className="sermons-editorial-grid">
+            
+            {/* Left Hand Featured Big Sermon */}
+            <div className="featured-sermon-card reveal-left">
+              <div className="featured-sermon-img">
+                <img src={featuredPost.image} alt={featuredPost.title} />
+                <span className="featured-tag">{featuredPost.category}</span>
+              </div>
+              <div className="featured-sermon-body">
+                <div className="sermon-meta">
+                  <span>By {featuredPost.author}</span>
+                  <span>•</span>
+                  <span><FaClock /> {featuredPost.date}</span>
+                </div>
+                <h3><Link to={`/blog/${featuredPost.slug}`}>{featuredPost.title}</Link></h3>
+                <p>{featuredPost.excerpt}</p>
+                <Link to={`/blog/${featuredPost.slug}`} className="btn btn-secondary-modern">
+                  Read Sermon <FaArrowRight />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Hand Minimal List of Other Sermons */}
+            <div className="sermon-aside-list reveal-right">
+              <h3>More Insights</h3>
+              
+              <div className="aside-cards-stack">
+                {sidePosts.map((post) => (
+                  <div className="sermon-aside-item" key={post.id}>
+                    <div className="aside-img-thmb">
+                      <img src={post.image} alt={post.title} />
+                    </div>
+                    <div className="aside-info">
+                      <span className="aside-category">{post.category}</span>
+                      <h4><Link to={`/blog/${post.slug}`}>{post.title}</Link></h4>
+                      <div className="aside-meta">
+                        <span>{post.date}</span>
+                        <span>•</span>
+                        <span>By {post.author}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="sermon-explore-box">
+                <Link to="/blog" className="explore-all-link">
+                  Explore Full Library <FaArrowRight />
+                </Link>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ===== MODERN NEWSLETTER SECTION ===== */}
+      <section className="modern-newsletter">
+        <div className="container">
+          <div className="newsletter-card-wrapper reveal-scale">
+            <div className="newsletter-glow" />
+            <div className="newsletter-main-content">
+              <h2>Stay Anchored in Word</h2>
+              <p>Subscribe to our weekly devotionals, prayer bulletins, and orientation alerts.</p>
+              <form className="newsletter-form-modern" onSubmit={handleNewsletter}>
+                <input
+                  type="email"
+                  placeholder="Enter your academic or personal email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <button type="submit" className="btn btn-gold-sub">Subscribe</button>
+              </form>
+            </div>
+          </div>
         </div>
       </section>
     </>

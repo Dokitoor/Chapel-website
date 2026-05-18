@@ -21,10 +21,44 @@ const ScrollToTop = () => {
   return null;
 };
 
+const ScrollRevealHandler = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.05, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      const elements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+      elements.forEach((el) => {
+        // Reset classes to allow re-animation on navigation if desired
+        el.classList.remove('visible');
+        observer.observe(el);
+      });
+
+      return () => observer.disconnect();
+    }, 150);
+
+    return () => clearTimeout(timer);
+  }, [pathname]);
+
+  return null;
+};
+
 const App = () => {
   return (
     <Router>
       <ScrollToTop />
+      <ScrollRevealHandler />
       <Navbar />
       <main style={{ paddingTop: '100px' }}>
         <Routes>
