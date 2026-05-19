@@ -996,7 +996,7 @@
 
 .sermon-audio-header {
   position: relative;
-  height: 200px;
+  height: 140px;
   overflow: hidden;
 }
 
@@ -1019,14 +1019,14 @@
 
 .sermon-audio-tag {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 12px;
+  left: 12px;
   z-index: 2;
   background: rgba(212, 160, 23, 0.95);
   color: var(--navy);
-  padding: 4px 12px;
+  padding: 3px 8px;
   border-radius: 50px;
-  font-size: 0.72rem;
+  font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -1034,18 +1034,19 @@
 
 .sermon-speaker-floating {
   position: absolute;
-  bottom: 16px;
-  left: 20px;
+  bottom: 12px;
+  left: 12px;
   z-index: 2;
   color: var(--white);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  font-size: 0.8rem;
 }
 
 .speaker-avatar-circle {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--crimson-light), var(--crimson));
   color: var(--white);
@@ -1053,12 +1054,12 @@
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 0.8rem;
-  border: 1.5px solid var(--gold);
+  font-size: 0.7rem;
+  border: 1px solid var(--gold);
 }
 
 .sermon-audio-body {
-  padding: 24px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -1067,38 +1068,38 @@
 .sermon-audio-meta {
   display: flex;
   align-items: center;
-  gap: 15px;
-  font-size: 0.76rem;
+  gap: 10px;
+  font-size: 0.72rem;
   color: var(--medium-gray);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .sermon-audio-meta span {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
 }
 
 .sermon-audio-body h3 {
   font-family: var(--font-serif);
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   color: var(--charcoal);
-  line-height: 1.4;
-  margin-bottom: 8px;
+  line-height: 1.3;
+  margin-bottom: 6px;
 }
 
 .sermon-scripture-ref {
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: var(--crimson);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 /* Custom Interactive Audio Player */
 .sermon-player-controls-wrap {
   background: var(--off-white);
   border-radius: var(--radius-md);
-  padding: 16px;
+  padding: 10px 12px;
   margin-top: auto;
   border: 1px solid rgba(15, 23, 42, 0.05);
 }
@@ -1107,13 +1108,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 6px;
 }
 
 .player-btn-play {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--crimson);
   color: var(--white);
@@ -1122,6 +1123,7 @@
   justify-content: center;
   transition: all var(--transition-fast);
   cursor: pointer;
+  font-size: 0.8rem;
 }
 
 .player-btn-play:hover {
@@ -1205,16 +1207,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 16px;
-  gap: 10px;
+  margin-top: 12px;
+  gap: 6px;
 }
 
 .btn-sermon-action {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   color: var(--medium-gray);
   transition: color var(--transition-fast);
 }
@@ -1228,13 +1230,13 @@
 }
 
 .btn-sermon-action-main {
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--crimson);
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
+  gap: 4px;
+  padding: 4px 10px;
   border-radius: 50px;
   background: rgba(59, 66, 159, 0.05);
   transition: all var(--transition-fast);
