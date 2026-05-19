@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { 
   FaChurch, FaUsers, FaChevronLeft, FaChevronRight, FaBible, 
   FaPrayingHands, FaArrowRight, FaClock, FaCalendarAlt,
-  FaPlay, FaPause, FaDownload, FaBookOpen, FaHeadphones, FaTimes, FaSearchPlus 
+  FaPlay, FaPause, FaDownload, FaBookOpen, FaHeadphones, FaTimes, FaSearchPlus, FaYoutube 
 } from 'react-icons/fa';
 import { blogPosts } from '../data/blogPosts';
 import '../styles/Home.css';
@@ -37,6 +37,7 @@ const latestSermonsData = [
     image: '/gallery-events.png',
     category: 'Orientation',
     slug: 'innocent-but-not-wise',
+    youtubeUrl: 'https://www.youtube.com/@cgsfuam2584/streams',
   },
   {
     id: 2,
@@ -48,6 +49,7 @@ const latestSermonsData = [
     image: '/hero-worship.png',
     category: 'Salvation',
     slug: 'ticket-for-the-journey',
+    youtubeUrl: 'https://www.youtube.com/@cgsfuam2584/streams',
   },
   {
     id: 3,
@@ -59,6 +61,7 @@ const latestSermonsData = [
     image: '/gallery-worship.png',
     category: 'Eternity',
     slug: 'arrival-without-a-welcome',
+    youtubeUrl: 'https://www.youtube.com/@cgsfuam2584/streams',
   }
 ];
 
@@ -482,12 +485,22 @@ const Home = () => {
                     </div>
 
                     <div className="sermon-audio-actions">
-                      <Link to={`/blog/${sermon.slug}`} className="btn-sermon-action">
-                        <FaBookOpen /> Read Transcript
+                      <Link to={`/blog/${sermon.slug}`} className="btn-sermon-action" title="Read Transcript">
+                        <FaBookOpen /> Transcript
                       </Link>
+                      <a 
+                        href={sermon.youtubeUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="btn-sermon-action youtube-btn"
+                        title="Watch on YouTube"
+                      >
+                        <FaYoutube /> YouTube
+                      </a>
                       <button 
                         className="btn-sermon-action-main"
                         onClick={() => alert(`Downloading sermon audio: "${sermon.title}"...`)}
+                        title="Download Audio"
                       >
                         <FaDownload /> Download
                       </button>

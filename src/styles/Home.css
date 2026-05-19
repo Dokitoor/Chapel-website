@@ -1223,6 +1223,10 @@
   color: var(--crimson);
 }
 
+.btn-sermon-action.youtube-btn:hover {
+  color: #ff0000;
+}
+
 .btn-sermon-action-main {
   font-size: 0.8rem;
   font-weight: 700;
