@@ -1,6 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { FaChurch, FaUsers, FaChevronLeft, FaChevronRight, FaBible, FaPrayingHands, FaArrowRight, FaClock, FaCalendarAlt } from 'react-icons/fa';
+import { 
+  FaChurch, FaUsers, FaChevronLeft, FaChevronRight, FaBible, 
+  FaPrayingHands, FaArrowRight, FaClock, FaCalendarAlt,
+  FaPlay, FaPause, FaDownload, FaBookOpen, FaHeadphones, FaTimes, FaSearchPlus 
+} from 'react-icons/fa';
 import { blogPosts } from '../data/blogPosts';
 import '../styles/Home.css';
 
@@ -22,9 +26,104 @@ const slides = [
   },
 ];
 
+const latestSermonsData = [
+  {
+    id: 1,
+    title: 'Running To Win (Freshers Welcome)',
+    speaker: 'The Chaplain',
+    date: 'Feb 18, 2026',
+    scripture: '1 Corinthians 9:24-27',
+    duration: 2535, // in seconds (42:15)
+    image: '/gallery-events.png',
+    category: 'Orientation',
+    slug: 'innocent-but-not-wise',
+  },
+  {
+    id: 2,
+    title: 'Ticket for the Journey',
+    speaker: 'The Chaplain',
+    date: 'July 1, 2020',
+    scripture: 'Hebrews 9:27',
+    duration: 2140, // in seconds (35:40)
+    image: '/hero-worship.png',
+    category: 'Salvation',
+    slug: 'ticket-for-the-journey',
+  },
+  {
+    id: 3,
+    title: 'Arrival Without a Welcome',
+    speaker: 'The Chaplain',
+    date: 'July 1, 2020',
+    scripture: 'Luke 16:19-31',
+    duration: 2300, // in seconds (38:20)
+    image: '/gallery-worship.png',
+    category: 'Eternity',
+    slug: 'arrival-without-a-welcome',
+  }
+];
+
+const galleryItems = [
+  {
+    id: 1,
+    title: 'Cinematic Sunday Worship',
+    category: 'Worship',
+    image: '/gallery-worship.png',
+    size: 'tall',
+    desc: 'Students gathering in joint praise and deep adoration during the Sunday worship session.'
+  },
+  {
+    id: 2,
+    title: 'Midweek Interactive Bible Study',
+    category: 'Bible Study',
+    image: '/gallery-fellowship.png',
+    size: 'wide',
+    desc: 'Connecting with the Word of God in small discipleship groups, sharing insights and growth.'
+  },
+  {
+    id: 3,
+    title: 'Praise Team & Chapel Choir',
+    category: 'Choir',
+    image: '/gallery-choir.png',
+    size: 'normal',
+    desc: 'Ministering in psalms, hymns, and spiritual songs with voices lifted to the Heavens.'
+  },
+  {
+    id: 4,
+    title: 'Freshman Orientation Seminar',
+    category: 'Events',
+    image: '/gallery-events.png',
+    size: 'normal',
+    desc: 'Welcoming the new session of students under the topic "Running To Win".'
+  },
+  {
+    id: 5,
+    title: 'Lively Campus Fellowship',
+    category: 'Events',
+    image: '/hero-community.png',
+    size: 'wide',
+    desc: 'A vibrant outdoor student assembly celebrating fellowship, community, and joy.'
+  },
+  {
+    id: 6,
+    title: 'Deep Congregational Worship',
+    category: 'Worship',
+    image: '/hero-worship.png',
+    size: 'normal',
+    desc: 'Our hearts aligned in absolute surrender, seeking the presence of the Shepherd.'
+  }
+];
+
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [email, setEmail] = useState('');
+  
+  // Interactive Audio Player State
+  const [playingSermon, setPlayingSermon] = useState(null);
+  const [progress, setProgress] = useState({});
+
+  // Gallery Filter & Lightbox State
+  const [activeFilter, setActiveFilter] = useState('All');
+  const [lightboxIndex, setLightboxIndex] = useState(null);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -39,10 +138,70 @@ const Home = () => {
     return () => clearInterval(timer);
   }, [nextSlide]);
 
+  // Audio player ticking simulation logic
+  useEffect(() => {
+    let interval;
+    if (playingSermon !== null) {
+      interval = setInterval(() => {
+        setProgress(prev => {
+          const currentProgress = prev[playingSermon] || 0;
+          const targetSermon = latestSermonsData.find(s => s.id === playingSermon);
+          const maxSeconds = targetSermon ? targetSermon.duration : 1800;
+          if (currentProgress >= maxSeconds) {
+            setPlayingSermon(null);
+            return { ...prev, [playingSermon]: 0 };
+          }
+          return { ...prev, [playingSermon]: currentProgress + 1 };
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [playingSermon]);
+
+  const formatTime = (secs) => {
+    if (!secs) return '0:00';
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  };
+
+  const handlePlayPause = (id) => {
+    if (playingSermon === id) {
+      setPlayingSermon(null);
+    } else {
+      setPlayingSermon(id);
+    }
+  };
+
+  const handleProgressClick = (id, e, duration) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+    const clickPercentage = clickX / width;
+    const targetSeconds = Math.floor(clickPercentage * duration);
+    setProgress(prev => ({ ...prev, [id]: targetSeconds }));
+  };
+
   const handleNewsletter = (e) => {
     e.preventDefault();
     alert('Thank you for subscribing!');
     setEmail('');
+  };
+
+  // Gallery items filter logic
+  const filteredGalleryItems = activeFilter === 'All'
+    ? galleryItems
+    : galleryItems.filter(item => item.category === activeFilter);
+
+  // Lightbox Navigation
+  const handlePrevLightbox = () => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex(prev => (prev - 1 + filteredGalleryItems.length) % filteredGalleryItems.length);
+  };
+
+  const handleNextLightbox = () => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex(prev => (prev + 1) % filteredGalleryItems.length);
   };
 
   // Splitting blog posts for modern editorial showcase
@@ -250,13 +409,154 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ===== FEATURED EDITORIAL SERMONS ===== */}
+      {/* ===== DEDICATED LATEST SERMONS SECTION ===== */}
+      <section className="modern-audio-sermons">
+        <div className="container">
+          <div className="section-title reveal">
+            <span className="sub-title">HEAR THE WORD</span>
+            <h2>Latest Sermons</h2>
+            <p>Listen to sound biblical teachings, Sunday sermons, and fellowship charges.</p>
+          </div>
+
+          <div className="sermon-audio-grid">
+            {latestSermonsData.map((sermon) => {
+              const currentSecs = progress[sermon.id] || 0;
+              const percent = (currentSecs / sermon.duration) * 100;
+              const isPlaying = playingSermon === sermon.id;
+              
+              return (
+                <div className="sermon-audio-card reveal" key={sermon.id}>
+                  <div className="sermon-audio-header">
+                    <img src={sermon.image} alt={sermon.title} />
+                    <div className="sermon-audio-header-overlay" />
+                    <span className="sermon-audio-tag">{sermon.category}</span>
+                    <div className="sermon-speaker-floating">
+                      <div className="speaker-avatar-circle">✝</div>
+                      <span>By {sermon.speaker}</span>
+                    </div>
+                  </div>
+
+                  <div className="sermon-audio-body">
+                    <div className="sermon-audio-meta">
+                      <span><FaCalendarAlt /> {sermon.date}</span>
+                      <span>•</span>
+                      <span><FaHeadphones /> {sermon.duration ? formatTime(sermon.duration) : 'Audio'}</span>
+                    </div>
+                    <h3>{sermon.title}</h3>
+                    <p className="sermon-scripture-ref">Scripture: {sermon.scripture}</p>
+
+                    {/* Integrated Interactive Audio Player */}
+                    <div className="sermon-player-controls-wrap">
+                      <div className="sermon-player-controls">
+                        <button 
+                          className={`player-btn-play ${isPlaying ? 'playing' : ''}`}
+                          onClick={() => handlePlayPause(sermon.id)}
+                          aria-label={isPlaying ? 'Pause' : 'Play'}
+                        >
+                          {isPlaying ? <FaPause /> : <FaPlay />}
+                        </button>
+                        
+                        {/* Audio Waves Visualizer */}
+                        <div className="audio-visualizer-wave">
+                          <span className={`audio-wave-bar ${isPlaying ? 'animating' : ''}`} />
+                          <span className={`audio-wave-bar ${isPlaying ? 'animating' : ''}`} />
+                          <span className={`audio-wave-bar ${isPlaying ? 'animating' : ''}`} />
+                          <span className={`audio-wave-bar ${isPlaying ? 'animating' : ''}`} />
+                        </div>
+                      </div>
+
+                      <div className="player-times-display">
+                        <span>{formatTime(currentSecs)}</span>
+                        <span>{formatTime(sermon.duration)}</span>
+                      </div>
+
+                      <div 
+                        className="player-progress-bar-bg"
+                        onClick={(e) => handleProgressClick(sermon.id, e, sermon.duration)}
+                      >
+                        <div 
+                          className={`player-progress-bar-fill ${isPlaying ? 'active' : ''}`}
+                          style={{ width: `${percent}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="sermon-audio-actions">
+                      <Link to={`/blog/${sermon.slug}`} className="btn-sermon-action">
+                        <FaBookOpen /> Read Transcript
+                      </Link>
+                      <button 
+                        className="btn-sermon-action-main"
+                        onClick={() => alert(`Downloading sermon audio: "${sermon.title}"...`)}
+                      >
+                        <FaDownload /> Download
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== HIGH-END FILTERABLE OUR GALLERY SECTION ===== */}
+      <section className="modern-bento-gallery">
+        <div className="container">
+          <div className="section-title reveal">
+            <span className="sub-title">PICTURES & FELLOWSHIP</span>
+            <h2>Our Gallery</h2>
+            <p>Capturing joyful moments of discipleship, communal prayers, and campus events.</p>
+          </div>
+
+          {/* Filter tabs */}
+          <div className="gallery-filter-tabs reveal">
+            {['All', 'Worship', 'Bible Study', 'Choir', 'Events'].map(tab => (
+              <button
+                key={tab}
+                className={`gallery-filter-btn ${activeFilter === tab ? 'active' : ''}`}
+                onClick={() => {
+                  setActiveFilter(tab);
+                  setLightboxIndex(null); // Reset lightbox to prevent indexing mismatch
+                }}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          {/* Bento-style gallery grid */}
+          <div className="gallery-grid-bento">
+            {filteredGalleryItems.map((item, idx) => (
+              <div 
+                className={`gallery-item-bento ${item.size} reveal-scale`} 
+                key={item.id}
+                onClick={() => setLightboxIndex(idx)}
+              >
+                <img src={item.image} alt={item.title} />
+                <div className="gallery-item-overlay">
+                  <div className="gallery-zoom-icon">
+                    <FaSearchPlus />
+                  </div>
+                  <div className="gallery-item-info-text">
+                    <span className="gallery-item-tag">{item.category}</span>
+                    <h4>{item.title}</h4>
+                    <p>{item.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FROM THE CHAPEL BLOG (Devotionals) ===== */}
       <section className="modern-sermons">
         <div className="container">
           <div className="section-title reveal">
-            <span className="sub-title">SPIRITUAL BREAD</span>
-            <h2>Latest From Our Blog</h2>
-            <p>Dive deep into spiritual devotionals and transformative Sunday messages.</p>
+            <span className="sub-title">SPIRITUAL INSIGHTS</span>
+            <h2>From the Chapel Blog</h2>
+            <p>Dive deep into spiritual devotionals and transformative articles.</p>
           </div>
 
           <div className="sermons-editorial-grid">
@@ -276,7 +576,7 @@ const Home = () => {
                 <h3><Link to={`/blog/${featuredPost.slug}`}>{featuredPost.title}</Link></h3>
                 <p>{featuredPost.excerpt}</p>
                 <Link to={`/blog/${featuredPost.slug}`} className="btn btn-secondary-modern">
-                  Read Sermon <FaArrowRight />
+                  Read Article <FaArrowRight />
                 </Link>
               </div>
             </div>
@@ -337,6 +637,38 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* ===== GALLERY LIGHTBOX MODAL Overlay ===== */}
+      {lightboxIndex !== null && filteredGalleryItems[lightboxIndex] && (
+        <div className="gallery-lightbox-overlay" onClick={() => setLightboxIndex(null)}>
+          <button className="lightbox-close-btn" onClick={() => setLightboxIndex(null)}>
+            <FaTimes />
+          </button>
+          
+          <button className="lightbox-nav-btn prev" onClick={(e) => { e.stopPropagation(); handlePrevLightbox(); }}>
+            <FaChevronLeft />
+          </button>
+          
+          <button className="lightbox-nav-btn next" onClick={(e) => { e.stopPropagation(); handleNextLightbox(); }}>
+            <FaChevronRight />
+          </button>
+          
+          <div className="lightbox-content-wrapper" onClick={(e) => e.stopPropagation()}>
+            <div className="lightbox-image-container">
+              <img 
+                src={filteredGalleryItems[lightboxIndex].image} 
+                alt={filteredGalleryItems[lightboxIndex].title} 
+              />
+            </div>
+            
+            <div className="lightbox-caption-card">
+              <span>{filteredGalleryItems[lightboxIndex].category}</span>
+              <h3>{filteredGalleryItems[lightboxIndex].title}</h3>
+              <p>{filteredGalleryItems[lightboxIndex].desc}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
