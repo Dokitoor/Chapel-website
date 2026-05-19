@@ -510,6 +510,12 @@ const Home = () => {
               );
             })}
           </div>
+
+          <div className="sermons-more-btn-wrap reveal" style={{ textAlign: 'center', marginTop: '40px' }}>
+            <Link to="/downloads" className="btn btn-primary">
+              View All Sermons & Resources <FaArrowRight />
+            </Link>
+          </div>
         </div>
       </section>
 
