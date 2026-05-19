@@ -37,7 +37,8 @@ const latestSermonsData = [
     image: '/gallery-events.png',
     category: 'Orientation',
     slug: 'innocent-but-not-wise',
-    youtubeUrl: 'https://www.youtube.com/@cgsfuam2584/streams',
+    youtubeUrl: 'https://youtu.be/Cf_GBmABLXs?si=t_ymB8ckA5dqOdUs',
+    youtubeId: 'Cf_GBmABLXs',
   },
   {
     id: 2,
@@ -49,7 +50,8 @@ const latestSermonsData = [
     image: '/hero-worship.png',
     category: 'Salvation',
     slug: 'ticket-for-the-journey',
-    youtubeUrl: 'https://www.youtube.com/@cgsfuam2584/streams',
+    youtubeUrl: 'https://youtu.be/Cf_GBmABLXs?si=t_ymB8ckA5dqOdUs',
+    youtubeId: 'Cf_GBmABLXs',
   },
   {
     id: 3,
@@ -61,7 +63,8 @@ const latestSermonsData = [
     image: '/gallery-worship.png',
     category: 'Eternity',
     slug: 'arrival-without-a-welcome',
-    youtubeUrl: 'https://www.youtube.com/@cgsfuam2584/streams',
+    youtubeUrl: 'https://youtu.be/Cf_GBmABLXs?si=t_ymB8ckA5dqOdUs',
+    youtubeId: 'Cf_GBmABLXs',
   }
 ];
 
@@ -497,13 +500,15 @@ const Home = () => {
                       >
                         <FaYoutube /> YouTube
                       </a>
-                      <button 
+                      <a 
+                        href="/sermon-1.mp3"
+                        download={`${sermon.title}.mp3`}
                         className="btn-sermon-action-main"
-                        onClick={() => alert(`Downloading sermon audio: "${sermon.title}"...`)}
                         title="Download Audio"
+                        onClick={() => alert(`Starting download for sermon audio: "${sermon.title}"...`)}
                       >
                         <FaDownload /> Download
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -687,6 +692,16 @@ const Home = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Hidden YouTube audio player stream */}
+      {playingSermon !== null && latestSermonsData.find(s => s.id === playingSermon) && (
+        <iframe
+          style={{ position: 'absolute', width: '0px', height: '0px', border: '0', pointerEvents: 'none' }}
+          src={`https://www.youtube.com/embed/${latestSermonsData.find(s => s.id === playingSermon).youtubeId}?autoplay=1&mute=0&enablejsapi=1`}
+          allow="autoplay; encrypted-media"
+          title="Hidden Audio Player"
+        />
       )}
     </>
   );
